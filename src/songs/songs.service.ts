@@ -9,7 +9,7 @@ export class SongsService {
         return this.songs
     }
     findAll() {
-        throw new Error('Method not implemented.');
-        // return this.songs
+        // throw new Error('Method not implemented.');
+        return this.songs
     }
 }
