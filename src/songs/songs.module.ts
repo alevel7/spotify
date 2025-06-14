@@ -2,27 +2,28 @@ import { Module } from '@nestjs/common';
 import { SongsController } from './songs.controller';
 import { SongsService } from './songs.service';
 import { connection } from 'src/common/constants/connections';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Song } from 'src/entities/song.entity';
+import { Artist } from 'src/entities/artist.entity';
+import { Playlist } from 'src/entities/playlist.entity';
+import { User } from 'src/entities/user.entity';
 
-const mockSongservice = {
-  findAll: () => {
-    return [{
-      "title": "I hate this song u",
-      "artists": [
-        "celine dion", "micheal jackson"
-      ],
-      "releaseDate": "2025-05-05",
-      "duration": "03:20"
-    }]
-  }
-}
+
 @Module({
-  controllers: [SongsController],
+  imports: [
+    TypeOrmModule.forFeature([
+      User, Playlist, Song, Artist
+    ])
+  ],
+  controllers: [
+    SongsController,
+  ],
   providers: [
     SongsService,
-    {
-      provide: "CONNECTION",
-      useValue: connection
-    }
+    // {
+    //   provide: "CONNECTION",
+    //   useValue: connection
+    // }
     // {
     //   provide:SongsService,
     //   useClass:SongsService
@@ -33,4 +34,4 @@ const mockSongservice = {
     // }
   ]
 })
-export class SongsModule {}
+export class SongsModule { }
