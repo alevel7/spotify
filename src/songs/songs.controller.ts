@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song-dto';
+import { UpdateSongDto } from './dto/update-song.dto';
 
 @Controller('songs')
 export class SongsController {
@@ -32,12 +33,14 @@ export class SongsController {
     }
 
     @Put(":id")
-    update(){
-        return "Updating one"
+    update(
+        @Param("id", ParseIntPipe) id: number, 
+        @Body() song: UpdateSongDto){
+        return this.songService.updateSong(id, song)
     }
 
     @Delete(":id")
-    remove(){
-        return "Removing one"
+    remove(@Param("id", ParseIntPipe) id: number){
+        return this.songService.delete(id)
     }
 }

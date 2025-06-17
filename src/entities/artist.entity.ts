@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Song } from "./song.entity";
 
@@ -10,6 +10,10 @@ export class Artist {
 
     @Column()
     name: string
+
+    @OneToOne(() => User)
+    @JoinColumn()
+    user: User
 
     @ManyToMany(() => Song, song =>song.artists)
     songs: Song[]

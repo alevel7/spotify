@@ -8,6 +8,9 @@ export class Song {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column({default:"some random title"})
+    title: string
+
     @Column('date')
     releaseDate: Date
 
