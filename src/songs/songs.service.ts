@@ -51,12 +51,14 @@ export class SongsService {
 
         return this.songRepo.save(nSong)
     }
-    async findAll(): Promise<Song[]> {
+    async findAll(page:number = 1, limit:number= 10): Promise<Song[]> {
         return this.songRepo.find({
             relations: {
                 artists: true,
                 playlist: true
-            }
+            },
+            skip: limit * (page - 1),
+            take: limit
         })
     }
 

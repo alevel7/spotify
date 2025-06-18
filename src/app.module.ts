@@ -6,6 +6,8 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PlaylistModule } from './playlist/playlist.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { PlaylistModule } from './playlist/playlist.module';
       autoLoadEntities: true,
       synchronize: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    })
+    }),
+    AuthModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
