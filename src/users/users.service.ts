@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from '../auth/dto/create-user.dto';
 import * as bcrypt from 'bcryptjs'
 
 @Injectable()
@@ -15,5 +15,12 @@ export class UsersService {
         user.password = await bcrypt.hash(user.password, salt)
         const newUser = this.userRepo.save(user)
         return newUser
+    }
+
+    async findOne(email:string):Promise<User | null> {
+        const user =  await this.userRepo.findOneBy({
+            email: email
+        })
+        return user;
     }
 }

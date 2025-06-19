@@ -18,8 +18,8 @@ export class User {
     @Column({unique: true})
     email:string
 
-    @Column({ select: false })
-    @Exclude()
+    @Column()
+    // @Exclude()
     password: string
 
     @OneToMany(() => Playlist, (playlist)=>playlist.user, {

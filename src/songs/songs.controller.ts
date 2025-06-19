@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song-dto';
 import { UpdateSongDto } from './dto/update-song.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.guard';
+import { ArtistJwtGuardGuard } from 'src/auth/guard/artist-jwt-guard.guard';
 
 @Controller('songs')
 export class SongsController {
@@ -13,11 +15,13 @@ export class SongsController {
     }
 
     @Post()
+    @UseGuards(ArtistJwtGuardGuard)
     createSong(@Body() newSong: CreateSongDto) {
         return this.songService.create(newSong)
     }
 
     @Get()
+    @UseGuards(JwtAuthGuard)
     findAll(@Query("limit", ParseIntPipe) limit: number, 
         @Query("page", ParseIntPipe) page: number) {
         try {
