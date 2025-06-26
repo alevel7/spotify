@@ -3,3 +3,7 @@ export type JwtPayload = {
     email: string,
     artistId?: number
 }
+
+export type TwofactorPayload = {
+    secret:string
+}

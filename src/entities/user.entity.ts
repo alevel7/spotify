@@ -19,8 +19,14 @@ export class User {
     email:string
 
     @Column()
-    // @Exclude()
+    @Exclude()
     password: string
+
+    @Column({nullable: true, type: 'text'})
+    twoFactorSecret: string
+
+    @Column({ default: false, type: 'boolean' })
+    enable2Factor: boolean
 
     @OneToMany(() => Playlist, (playlist)=>playlist.user, {
         cascade:true

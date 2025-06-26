@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/auth/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guard/jwt-guard.guard';
+import { ValidateTokenDTO } from './dto/validateToken.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,5 +21,17 @@ export class AuthController {
     @Post('login')
     login(@Body() loginDetail: LoginDto): Promise<{accessToken:string}> {
         return this.authService.login(loginDetail)
+    }
+
+    @Post('enable-2fa')
+    @UseGuards(JwtAuthGuard)
+    enableTwoFactorAuthentication(@Request() req:any): Promise<{ secret: string }> {
+        return this.authService.enableTwoFactorAuthentication(req.user.userId);
+    }
+
+    @Post('validate-2fa')
+    @UseGuards(JwtAuthGuard)
+    validateTwoFactorAuth(@Request() req: any, @Body() tokenDto:ValidateTokenDTO): Promise<{ verified: boolean }> {
+        return this.authService.validateTwoFactorAuth(req.user.userId, tokenDto.token);
     }
 }
