@@ -28,6 +28,9 @@ export class User {
     @Column({ default: false, type: 'boolean' })
     enable2Factor: boolean
 
+    @Column({type: 'uuid', nullable: true})
+    apiKey: string
+
     @OneToMany(() => Playlist, (playlist)=>playlist.user, {
         cascade:true
     })

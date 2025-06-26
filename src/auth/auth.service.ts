@@ -6,6 +6,8 @@ import * as speakEasy from 'speakeasy';
 import { JwtService } from '@nestjs/jwt';
 import { ArtistService } from 'src/artist/artist.service';
 import { JwtPayload, TwofactorPayload } from './types/jwtPayload.type';
+import { UpdateResult } from 'typeorm';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +18,7 @@ export class AuthService {
         private artistService: ArtistService
     ) { }
 
-    async login(loginDetail: LoginDto): Promise<{ accessToken: string }> {
+    async login(loginDetail: LoginDto): Promise<{ accessToken?: string, validate2fa?: string, message?: string }> {
         const user = await this.userService.findByEmail(loginDetail.email)
         if (!user) {
             throw new UnauthorizedException('User not found')
@@ -27,6 +29,13 @@ export class AuthService {
             const artist = await this.artistService.findArtist(user.id)
             if (artist) {
                 payload.artistId = artist.id
+            }
+            if (user.enable2Factor) {
+               return {
+                    validate2fa: `http://localhost:3000/auth/enable-2fa`,
+                    message: '2FA is enabled for this user, please validate your token',
+                    accessToken: undefined
+               }
             }
             return {
                 accessToken: this.jwtService.sign(payload)
@@ -59,5 +68,17 @@ export class AuthService {
             token
         });
         return { verified: isVerified };
+    }
+
+    async disable2Factor(userId: number): Promise<UpdateResult> {
+        const user = await this.userService.findById(userId);
+        if (!user) {
+            throw new UnauthorizedException('User not found');
+        }
+        return await this.userService.updateTwoFactorSecret(userId, null, false);
+    }
+
+    async validateApiKey(apiKey: string): Promise<User | null> {
+        return await this.userService.findByApiKey(apiKey)
     }
 }
