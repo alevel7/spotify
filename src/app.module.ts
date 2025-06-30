@@ -9,15 +9,22 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ArtistModule } from './artist/artist.module';
 import { dataSourceOptions } from 'db/data-source';
+import { ConfigModule } from '@nestjs/config';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
     SongsModule,
     PlaylistModule,
     TypeOrmModule.forRoot(dataSourceOptions),
     AuthModule,
     UsersModule,
-    ArtistModule
+    ArtistModule,
+    SeedModule
   ],
   controllers: [AppController],
   providers: [AppService],
