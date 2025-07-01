@@ -16,6 +16,9 @@ class EnvironmentVariables {
     @IsString()
     DB_HOST: string;
 
+    @IsNumber()
+    DB_PORT: number;
+
     @IsString()
     USERNAME: string;
 
@@ -30,7 +33,6 @@ class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>): EnvironmentVariables {
-    
     const validatedConfig = plainToInstance(EnvironmentVariables, config, {
         enableImplicitConversion: true,
     })
