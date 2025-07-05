@@ -1,6 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from '../entities/user.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';

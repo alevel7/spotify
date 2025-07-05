@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Song } from 'src/entities/song.entity';
+import { Song } from '../entities/song.entity';
 import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
 import { CreateSongDto } from './dto/create-song-dto';
-import { Artist } from 'src/entities/artist.entity';
-import { Playlist } from 'src/entities/playlist.entity';
+import { Artist } from '../entities/artist.entity';
+import { Playlist } from '../entities/playlist.entity';
 import { UpdateSongDto } from './dto/update-song.dto';
 
 @Injectable()

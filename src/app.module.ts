@@ -18,8 +18,10 @@ import { validate } from 'env.validation';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.development', '.env.production'],
-      load: [configuration],
+      envFilePath: [
+        `${process.cwd()}/.env.${process.env.NODE_ENV}`,
+      ],
+      // load: [configuration],
       validate: validate
     }),
     SongsModule,
