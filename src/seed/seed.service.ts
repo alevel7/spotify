@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from '../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { v4 as uuid } from "uuid";
 import { Repository } from 'typeorm';
-import { Artist } from 'src/entities/artist.entity';
-import { Playlist } from 'src/entities/playlist.entity';
+import { Artist } from '../entities/artist.entity';
+import { Playlist } from '../entities/playlist.entity';
 import { faker } from '@faker-js/faker';
-import { Song } from 'src/entities/song.entity';
+import { Song } from '../entities/song.entity';
 
 @Injectable()
 export class SeedService {

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { SongsController } from './songs.controller';
 import { SongsService } from './songs.service';
-import { connection } from 'src/common/constants/connections';
+import { connection } from '../common/constants/connections';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Song } from 'src/entities/song.entity';
-import { Artist } from 'src/entities/artist.entity';
-import { Playlist } from 'src/entities/playlist.entity';
-import { User } from 'src/entities/user.entity';
+import { Song } from '../entities/song.entity';
+import { Artist } from '../entities/artist.entity';
+import { Playlist } from '../entities/playlist.entity';
+import { User } from '../entities/user.entity';
 
 
 @Module({

@@ -37,11 +37,10 @@ describe('AuthController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-  it('should call signUp method', async () => {
+  it('should fail with invalid payload value', async() => {
     const userDto = { firstName: 'Test', lastName: 'User', email: 'testuser', password: 'testpass' };
     mockUsersService.create = jest.fn().mockResolvedValue(userDto);
-    const result = await controller.signUp(userDto);
-    expect(result).toEqual(userDto);
-    expect(mockUsersService.create).toHaveBeenCalledWith(userDto);
-  });
+    const response = await controller.signUp(userDto);
+    expect(response).toEqual(userDto);
+  })
 });

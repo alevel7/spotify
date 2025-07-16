@@ -4,26 +4,26 @@ export class CreateSongDto {
 
     @IsString()
     @IsNotEmpty()
-    readonly title:string
+    title:string
 
     @IsNotEmpty()
     @IsArray()
     @IsNumber({},{each:true})
-    readonly artists :number[]
+    artists :number[]
 
     @IsNotEmpty()
     @IsDateString()
-    readonly releaseDate: Date
+    releaseDate: Date
 
     @IsString()
     @IsOptional()
-    readonly lyrics: string
+    lyrics: string
 
     @IsNotEmpty()
     @IsMilitaryTime()
-    readonly duration: Date
+    duration: Date
 
     @IsNotEmpty()
     @IsNumber()
-    readonly playlist: number
+    playlist: number
 }

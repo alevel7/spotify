@@ -4,17 +4,20 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Song } from '../entities/song.entity';
 import { Playlist } from '../entities/playlist.entity';
 import { Artist } from '../entities/artist.entity';
+import { Repository } from 'typeorm';
+import { CreateSongDto } from './dto/create-song-dto';
 
 describe('SongsService', () => {
   let songService: SongsService;
+  let songRepo: Repository<Song>;
 
-  // const mockSongsService = {
-  //   create: jest.fn(),
-  //   findAll: jest.fn(),
-  //   findOne: jest.fn(),
-  //   updateSong: jest.fn(),
-  //   delete: jest.fn(),
-  // };
+  const newSong = new CreateSongDto();
+  newSong.duration = new Date();
+  newSong.artists = [1];
+  newSong.releaseDate = new Date();
+  newSong.lyrics = "some random lyrics";
+  newSong.title = "some random title";
+  newSong.playlist = 1;
 
 
   const repository = {
@@ -48,10 +51,21 @@ describe('SongsService', () => {
     .compile();
 
     songService = module.get<SongsService>(SongsService);
+    songRepo = module.get<Repository<Song>>(getRepositoryToken(Song));
 
   });
 
   it('should be defined', () => {
     expect(songService).toBeDefined();
   });
+  describe("find one sond by id", () => {
+    it("should return a song", async () => {
+      const aSong = new Song()
+      const findOneSpy = jest.spyOn(songRepo, "findOne")
+      findOneSpy.mockResolvedValue(aSong);
+      const song = await songService.findOne(1);
+      expect(song).toBeDefined();
+      expect(song).toEqual(aSong);
+    })
+  })
 });
