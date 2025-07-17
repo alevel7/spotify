@@ -17,8 +17,8 @@ export const dataSourceOptions: DataSourceOptions = {
     logging: true, // Enable logging for debugging
     migrationsTableName: 'migrations',
     migrationsRun: false,
-    // entities: ['dist/**/*.entity.js'],
-    entities: [__dirname + '/../**/*.entity.ts'],
+    // entities: ['dist/**/*.entity.{js,ts}'],
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
     migrations: ['dist/db/migrations/*.js'],
     subscribers: [],
 }
